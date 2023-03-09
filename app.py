@@ -7,7 +7,6 @@ from array import array
 import os
 from PIL import Image
 import sys
-
 import time
 import json
 
@@ -27,7 +26,7 @@ def get_tags(filepath):
     tags_name = []
     for tag in tags:
         tags_name.append(tag.name)
-        
+
     return tags_name
 
 def detect_objects(filepath):
@@ -41,16 +40,17 @@ import streamlit as st
 from PIL import ImageDraw
 from PIL import ImageFont
 
+
 st.title('物体検出アプリ')
 
-uploaded_file = st.file_uploader('Choose an image...', type=['jpg','png'])
+uploaded_file = st.file_uploader('Choose an image ...', type=['jpg','png'])
 if uploaded_file is not None:
     img = Image.open(uploaded_file)
     img_path = f'img/{uploaded_file.name}'
     img.save(img_path)
     objects = detect_objects(img_path)
 
-    # 描画
+    #描画
     draw = ImageDraw.Draw(img)
     for object in objects:
         x = object.rectangle.x
@@ -67,7 +67,12 @@ if uploaded_file is not None:
         draw.text((x, y), caption, fill='white', font=font)
 
     st.image(img)
+
     tags_name = get_tags(img_path)
     tags_name = ', '.join(tags_name)
+
+
+
     st.markdown('**認識されたコンテンツタグ**')
-    st.markdown(f'> {tags_name}')    
+    st.markdown(f'> {tags_name}')
+
